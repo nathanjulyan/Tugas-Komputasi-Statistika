@@ -1,0 +1,91 @@
+---
+title: "Tugas Komputasi Statistika 2"
+author: "Nama  : Nathan Julyan Putra Deshwara  \nNIM   : 3338250042  \nKelas : 2A  \n"
+date: "2026-09-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Tugas
+Masukkan data iris di R kemudian kerjakan hal berikut:
+
+1. Tampilkan data Sepal.Length saja
+2. Sebutkan tipe data tiap kolom
+3. Buat variabel baru dengan nama turunan yang berasal/ turunan dari variabel Sepal.Width. Nilai variabel turunan hanya memiliki dua nilai yaitu “Besar” dan “Kecil”. Besar jika Sepal.Width lebih besar dari 3, begitu pula sebaliknya.
+4. Ubah variabel turunan menjadi sepal
+5. Ambil data dengan sepal bernilai besar dari species virginica
+6. Cek jumlah species dalam data
+7. Pecah data iris menjadi 3 data frame dengan tiap data frame khusus untuk species tertentu
+8. Dari setiap data frame species, urutkan data berdasarkan Sepal.Width
+
+## Jawab
+```{r}
+iris
+```
+1.Menampilkan data Sepal.Length
+```{r}
+iris$Sepal.Length
+```
+
+2.Menyebutkan tipe data pada setiap kolom
+```{r}
+str(iris)
+```
+
+3.Membuat variabel baru
+```{r}
+library(dplyr)
+turunan <- iris %>%
+  mutate(
+    turunan = ifelse(Sepal.Width > 3, "Besar", "Kecil")
+  )
+turunan
+```
+
+4. ubah variabel turunan menjadi sepal
+```{r}
+turunan <- turunan %>%
+  rename(sepal = turunan)
+turunan
+```
+
+5. Mengambil data dengan sepal bernilai besar dari species virginica
+```{r}
+data <- turunan %>% 
+  filter(Species == "virginica", sepal == "Besar")
+print(data)
+```
+
+6. Cek jumlah species dalam data
+```{r}
+table(turunan$Species)
+
+table(data$Species)
+```
+
+7. membuat data iris menjadi 3 data frame dengan tiap data frame khusus untuk species tertentu
+```{r}
+df_setosa <- filter(iris, Species == "setosa")
+df_setosa
+
+df_versicolor <- filter(iris, Species == "versicolor")
+df_versicolor
+
+df_virginica <- filter(iris, Species == "virginica")
+df_virginica
+```
+
+8. Mengurutkan data berdasarkan Sepal.Width dari data frame species
+```{r}
+df_terurut_setosa <- arrange(df_setosa, Sepal.Width)
+print(df_terurut_setosa)
+
+df_terurut_versicolor <- arrange(df_versicolor, Sepal.Width)
+df_terurut_versicolor
+
+df_terurut_virginica <- arrange(df_virginica, Sepal.Width )
+df_terurut_virginica
+```
